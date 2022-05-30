@@ -1,0 +1,18 @@
+﻿@using P2PChat.Models
+
+@model List<Message>
+
+<h1>P2P Chat, yo</h1>
+
+<form method="post" action="@Url.Action("post")">
+    <textarea name="Text"></textarea>
+    <input type="submit" />
+</form>
+
+<hr />
+
+@foreach(var m in Model)
+{
+    <h1>@m.Username</h1>
+    <p>@m.Text</p>
+}
