@@ -20,26 +20,28 @@ namespace P2PChat.Services
 
         public void HavePeer(string peer_ip, Client c)
         {
-            if (c.Port is not null)
+            if (c.Port is null)
+                return;
+
+            Peer? p = db.Peers.Find(peer_ip + ":" + c.Port);
+
+            long now = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+
+            if (p is null)
             {
-
-                Peer? p = db.Peers.Find(peer_ip + ":" + c.Port);
-
-                if (p is null)
-                {
-                    db.Peers.Add(new Peer() { IPPort = peer_ip + ":" + c.Port, LastId = c.Id });
-                }
-                else
-                {
-                    p.LastId = c.Id;
-                }
-                db.SaveChanges();
+                db.Peers.Add(new Peer() { IPPort = peer_ip + ":" + c.Port, LastId = c.Id, LastSeen = now });
             }
+            else
+            {
+                p.LastId = c.Id;
+                p.LastSeen = now;
+            }
+            db.SaveChanges();
         }
 
-        public string[] Peers()
+        public List<Peer> Peers()
         {
-            return db.Peers.Select(p=>p.IPPort).ToArray();
+            return db.Peers.ToList();
         }
 
         public void ReceiveMessage(Message m)

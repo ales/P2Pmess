@@ -64,9 +64,39 @@
         max-width: 60em;
         margin: 0 auto;
     }
+
+    aside {
+        position:absolute;
+        right:0;
+        background: cyan;
+        padding: 1ex;
+    }
+
 </style>
 
 <div id="app">
+    <aside>
+        @foreach (var p in Model.Peers)
+        {
+            var diff = DateTime.Now - DateTimeOffset.FromUnixTimeMilliseconds(p.LastSeen);
+            <p>
+                @if (diff.TotalSeconds < 30)
+                {
+                    <b>🟢</b>
+                }
+                else if (diff.TotalSeconds < 90)
+                {
+                    <b>🟠</b>
+                }
+                else
+                {
+                    <b>⚪️</b>
+                }
+                @p.LastId<br />
+                <code>@p.IPPort</code>
+            </p>
+        }
+    </aside>
     <main>
         @foreach (var m in Model.Messages)
         {

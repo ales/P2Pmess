@@ -5,6 +5,7 @@ namespace P2PChat.Models
 	{
 		public string IPPort { get; set; }
         public string LastId { get; set; }
-    }
+		public long LastSeen { get; set; }
+	}
 }
 

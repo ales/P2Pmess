@@ -23,7 +23,11 @@ namespace P2PChat.Controllers
         
         public IActionResult Index()
         {
-            IndexViewModel vm = new() { Messages = app.GetMessages(), CurrentUser = app.CurrentUser };
+            IndexViewModel vm = new() {
+                Messages = app.GetMessages(),
+                CurrentUser = app.CurrentUser,
+                Peers = app.Peers()
+            };
             return View(vm);
         }
 

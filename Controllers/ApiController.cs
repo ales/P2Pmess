@@ -20,7 +20,7 @@ namespace P2PChat.Controllers
         [HttpGet("peers")]
         public IActionResult Peers()
         {
-            return Ok(app.Peers());
+            return Ok(app.Peers().Select(p => p.IPPort).ToArray());
         }
 
         [HttpPost("message/receive")]
@@ -30,6 +30,16 @@ namespace P2PChat.Controllers
 
             app.ReceiveMessage(remoteMessage.Message);
             app.HavePeer(peerIp, remoteMessage.Client);
+
+            return Ok();
+        }
+
+        [HttpPost("ping")]
+        public IActionResult Ping([FromBody] Client client)
+        {
+            var peerIp = HttpContext.Connection.RemoteIpAddress.ToString();
+
+            app.HavePeer(peerIp, client);
 
             return Ok();
         }
