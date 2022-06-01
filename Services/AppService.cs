@@ -12,6 +12,8 @@ namespace P2PChat.Services
 
         public string CurrentUser;
 
+
+
         public AppService(AppDbContext appDbContext)
 		{
             db = appDbContext;
