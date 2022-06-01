@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using P2PChat.Models;
+using P2PChat.ViewModels;
 using P2PChat.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,22 +14,23 @@ namespace P2PChat.Controllers
     [Route("")]
     public class HomeController : Controller
     {
-        private MessageService messageService { get; set; }
+        private AppService app { get; set; }
 
-        public HomeController(MessageService messageService)
+        public HomeController(AppService messageService)
         {
-            this.messageService = messageService;
+            this.app = messageService;
         }
         
         public IActionResult Index()
         {
-            return View(messageService.GetMessages());
+            IndexViewModel vm = new() { Messages = app.GetMessages(), CurrentUser = app.CurrentUser };
+            return View(vm);
         }
 
         [HttpPost("post")]
         public IActionResult Post(Message m)
         {
-            messageService.NewMessage(m);
+            app.NewMessage(m);
 
             return RedirectToAction("index");
         }

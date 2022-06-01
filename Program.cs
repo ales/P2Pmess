@@ -7,9 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc();
 
-builder.Services.AddScoped<MessageService>();
-
 ConfigureDb(builder.Services);
+
+builder.Services.AddScoped<AppService>();
 
 var app = builder.Build();
 
