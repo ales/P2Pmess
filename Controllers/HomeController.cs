@@ -7,7 +7,6 @@ using P2PChat.Models;
 using P2PChat.ViewModels;
 using P2PChat.Services;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace P2PChat.Controllers
 {

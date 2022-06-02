@@ -11,6 +11,10 @@ ConfigureDb(builder.Services);
 
 builder.Services.AddScoped<AppService>();
 
+//builder.Services.AddSingleton<TimerService>();
+
+var t = new TimerService();
+
 var app = builder.Build();
 
 app.UseStaticFiles();

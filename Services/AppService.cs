@@ -57,7 +57,7 @@ namespace P2PChat.Services
 
 		public void NewMessage(Message m)
         {
-			m.Username = "ales";
+			m.Username = CurrentUser;
 			m.Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
             m.Id = Hash(m.Username + m.Text + m.Timestamp);
 
@@ -84,17 +84,17 @@ namespace P2PChat.Services
             return db.Messages.OrderByDescending(m=>m.Timestamp).ToList();
         }
 
-        private string Hash(string pass)
+        private Guid Hash(string pass)
         {
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            var a = KeyDerivation.Pbkdf2(
                 password: pass,
                 salt: Encoding.UTF8.GetBytes("salt_my_message💯"),
                 prf: KeyDerivationPrf.HMACSHA256,
                 iterationCount: 98723,
-                numBytesRequested: 256 / 8
-            ));
+                numBytesRequested: 256 / 16
+            );
 
-            return hashed;
+            return new Guid(a);
         }
     }
 }
