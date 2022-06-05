@@ -104,7 +104,7 @@
     <main>
         @foreach (var m in Model.Messages)
         {
-            <div class="@Model.ClassBinding(m.Username,Model.CurrentUser)">
+            <div class="@Model.ClassBinding(m.Username)">
                 <strong>@m.Username</strong>
                 <code>@DateTimeOffset.FromUnixTimeMilliseconds(m.Timestamp).ToLocalTime()</code>
                 <p>@m.Text</p>

@@ -9,7 +9,7 @@ using P2PChat.Services;
 namespace P2PChat.Controllers
 {
     [Route("api")]
-    public class ApiController : Controller//Base
+    public class ApiController : ControllerBase
     {
         public AppService app { get; set; }
         public ApiController(AppService messageService)
